@@ -6,9 +6,8 @@ import argparse
 
 
 ### Constants
-PATH_PHPBB = '/var/www/phpbb/'
-PATH_PHPBB = '/var/www/forum/' # Snahp
-PATH_EXT = os.path.join(PATH_PHPBB, 'ext')
+#  PATH_PHPBB = '/var/www/phpbb/'
+#  PATH_PHPBB = '/var/www/forum/' # Snahp
 PATH_TMP = '/tmp/'
 PATH_LOGFILE = './log.txt'
 
@@ -18,19 +17,19 @@ GITDEF = {
             'title': 'hideBBcode',
             'giturl': 'git@github.com:johnelliotbaker/hideBBcode.git',
             #  'giturl': 'git@github.com:marcovo/phpbb_hidebbcode.git',
-            'path': os.path.join(PATH_PHPBB, PATH_EXT, 'marcovo', 'hideBBcode'),
+            'subpath': os.path.join('ext', 'marcovo', 'hideBBcode'),
             'pathtmp': os.path.join(PATH_TMP, 'hideBBcode')
             },
         'gfksx': {
             'title': 'gfksx',
             'giturl': 'git@github.com:johnelliotbaker/gfksx.git',
-            'path': os.path.join(PATH_PHPBB, PATH_EXT, 'gfksx'),
+            'subpath': os.path.join('ext', 'gfksx'),
             'pathtmp': os.path.join(PATH_TMP, 'gfksx')
             },
         'snahp': {
             'title': 'snahp',
             'giturl': 'git@github.com:johnelliotbaker/snahp.git',
-            'path': os.path.join(PATH_PHPBB, PATH_EXT, 'jeb', 'snahp'),
+            'subpath': os.path.join('ext', 'jeb', 'snahp'),
             'pathtmp': os.path.join(PATH_TMP, 'snahp')
             }
         }
@@ -155,21 +154,26 @@ def doGit():
     git.exec()
 
 def doDiff(bVerbose=True, bLog=True):
+    global PATH_PHPBB
     sd = SnahpDiff()
     sd.bVerbose = bVerbose
     sd.bLog     = bLog
     for key in GITDEF:
         entry = GITDEF[key]
-        p1    = entry['path']
+        p1    = os.path.join(PATH_PHPBB, entry['subpath'])
         p2    = entry['pathtmp']
         dcmp  = dircmp(p1, p2)
         sd.exec(dcmp)
 
 if __name__ == "__main__":
+    global PATH_PHPBB
+    PATH_PHPBB = '/var/www/forum/'
+
     parser = argparse.ArgumentParser(description='Verify integrity of snahp extensions.')
     parser.add_argument('-m', '--mode',  type=str, help='Available modes are: all, gitclone, verify')
     parser.add_argument('--path_phpbb',  type=str, help='Path to phpbb directory')
     args = parser.parse_args()
+
     mode = args.mode
     if args.path_phpbb:
         PATH_PHPBB = args.path_phpbb
