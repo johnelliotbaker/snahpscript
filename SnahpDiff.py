@@ -2,6 +2,7 @@ from filecmp import dircmp
 import os
 import shutil
 import difflib
+import argparse
 
 
 ### Constants
@@ -149,16 +150,36 @@ class SnahpDiff(object):
             self.procAll(sub_dcmp)
 
 
-if __name__ == "__main__":
-    #  git = Git()
-    #  git.exec()
+def doGit():
+    git = Git()
+    git.exec()
 
+def doDiff(bVerbose=True, bLog=True):
     sd = SnahpDiff()
-    sd.bVerbose = True
-    sd.bLog     = True
+    sd.bVerbose = bVerbose
+    sd.bLog     = bLog
     for key in GITDEF:
         entry = GITDEF[key]
         p1    = entry['path']
         p2    = entry['pathtmp']
         dcmp  = dircmp(p1, p2)
         sd.exec(dcmp)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Verify integrity of snahp extensions.')
+    parser.add_argument('mode', type=str,
+            help='Available modes are: all, gitclone, verify')
+    args = parser.parse_args()
+    mode = args.mode
+
+    if mode == 'all':
+        doGit()
+        doDiff()
+    elif mode == 'gitclone':
+        doGit()
+    elif mode == 'verify':
+        doDiff()
+    else:
+        print('Invalid mode selection.')
+
+
