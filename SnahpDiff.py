@@ -7,7 +7,7 @@ import argparse
 
 ### Constants
 PATH_PHPBB = '/var/www/phpbb/'
-#  PATH_PHPBB = '/var/www/forum/' # Snahp
+PATH_PHPBB = '/var/www/forum/' # Snahp
 PATH_EXT = os.path.join(PATH_PHPBB, 'ext')
 PATH_TMP = '/tmp/'
 PATH_LOGFILE = './log.txt'
@@ -167,19 +167,26 @@ def doDiff(bVerbose=True, bLog=True):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Verify integrity of snahp extensions.')
-    parser.add_argument('mode', type=str,
-            help='Available modes are: all, gitclone, verify')
+    parser.add_argument('-m', '--mode',  type=str, help='Available modes are: all, gitclone, verify')
+    parser.add_argument('--path_phpbb',  type=str, help='Path to phpbb directory')
     args = parser.parse_args()
     mode = args.mode
-
-    if mode == 'all':
-        doGit()
-        doDiff()
-    elif mode == 'gitclone':
-        doGit()
-    elif mode == 'verify':
-        doDiff()
+    if args.path_phpbb:
+        PATH_PHPBB = args.path_phpbb
+    if not os.path.isdir(PATH_PHPBB) or not os.path.isdir(os.path.join(PATH_PHPBB, 'ext')):
+        raise Exception("{} is not a valid phpbb directory".format(PATH_PHPBB))
+    if mode:
+        if mode == 'all':
+            doGit()
+            doDiff()
+        elif mode == 'gitclone':
+            doGit()
+        elif mode == 'verify':
+            doDiff()
+        else:
+            print('Invalid mode selection.')
     else:
-        print('Invalid mode selection.')
+        doGit()
+        doDiff()
 
 
