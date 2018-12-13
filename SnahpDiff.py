@@ -8,7 +8,7 @@ import argparse
 ### Constants
 #  PATH_PHPBB = '/var/www/phpbb/'
 #  PATH_PHPBB = '/var/www/forum/' # Snahp
-PATH_TMP = '/tmp/'
+PATH_TMP = './tmp/'
 PATH_LOGFILE = './log.txt'
 
 ### Definitions
@@ -44,6 +44,12 @@ class Git(object):
         self.PrepareTmp()
 
     def PrepareTmp(self):
+        if not os.path.isdir(PATH_TMP):
+            try:
+                os.mkdir(PATH_TMP)
+            except Exception as e:
+                print(e)
+                raise e
         import subprocess
         for key in GITDEF:
             entry = GITDEF[key]
