@@ -136,12 +136,12 @@ class SnahpDiff(object):
         p1 = dcmp.left
         p2 = dcmp.right
         if not os.path.isdir(p1):
-            strn = '{} doesn''t exist'.format(p1)
+            strn = "{} doesn't exist".format(p1)
             self.logToFile(strn)
             if self.bVerbose and strn: print(strn)
             return
         if not os.path.isdir(p2):
-            strn = '{} doesn''t exist'.format(p2)
+            strn = "{} doesn't exist".format(p2)
             self.logToFile(strn)
             if self.bVerbose and strn: print(strn)
             return
