@@ -15,20 +15,20 @@ PATH_LOGFILE = './log.txt'
 GITDEF = {
         'hidebbcode': {
             'title': 'hideBBcode',
-            'giturl': 'git@github.com:johnelliotbaker/hideBBcode.git',
+            'giturl': 'https@github.com:johnelliotbaker/hideBBcode.git',
             #  'giturl': 'git@github.com:marcovo/phpbb_hidebbcode.git',
             'subpath': os.path.join('ext', 'marcovo', 'hideBBcode'),
             'pathtmp': os.path.join(PATH_TMP, 'hideBBcode')
             },
         'gfksx': {
             'title': 'gfksx',
-            'giturl': 'git@github.com:johnelliotbaker/gfksx.git',
+            'giturl': 'https@github.com:johnelliotbaker/gfksx.git',
             'subpath': os.path.join('ext', 'gfksx'),
             'pathtmp': os.path.join(PATH_TMP, 'gfksx')
             },
         'snahp': {
             'title': 'snahp',
-            'giturl': 'git@github.com:johnelliotbaker/snahp.git',
+            'giturl': 'https@github.com:johnelliotbaker/snahp.git',
             'subpath': os.path.join('ext', 'jeb', 'snahp'),
             'pathtmp': os.path.join(PATH_TMP, 'snahp')
             }
