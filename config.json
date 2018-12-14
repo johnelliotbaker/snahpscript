@@ -1,0 +1,34 @@
+{
+    "database":
+    {
+        "type": "mysql",
+        "username": "root",
+        "database": "phpbb"
+    },
+    "path":
+    {
+        "tmp": "./tmp",
+        "backup": "./backup",
+        "phpbb": "/var/www/forum",
+        "ext": "ext"
+    },
+    "extensions":
+    [
+        {
+            "title": "hideBBcode",
+            "path": "marcovo",
+            "giturl": "https://github.com/johnelliotbaker/hideBBcode.git"
+        },
+        {
+            "title": "ThanksForPosts",
+            "path": "gfksx",
+            "giturl": "https://github.com/johnelliotbaker/gfksx.git"
+
+        },
+        {
+            "title": "snahp",
+            "path": "jeb",
+            "giturl": "https://github.com/johnelliotbaker/snahp.git"
+        }
+    ]
+}
