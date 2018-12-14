@@ -62,5 +62,5 @@ The back ups are stored in the directory defined in config.json
 #### Database restoration
 Database backup can be restored in shell using:
 ```
-mysql -u[username] -p[password] [databasename] < [backupfilename]
+gunzip < NAME_OF-FILE.GZ | mysql -u USERNAME -p --default-character-set=utf8 DATABASE_NAME
 ```
