@@ -21,10 +21,10 @@ GITDEF = {
             'pathtmp': os.path.join(PATH_TMP, 'hideBBcode')
             },
         'gfksx': {
-            'title': 'gfksx',
+            'title': 'ThanksForPosts',
             'giturl': 'https://github.com/johnelliotbaker/gfksx.git',
-            'subpath': os.path.join('ext', 'gfksx'),
-            'pathtmp': os.path.join(PATH_TMP, 'gfksx')
+            'subpath': os.path.join('ext', 'gfksx', 'ThanksForPosts'),
+            'pathtmp': os.path.join(PATH_TMP, 'ThanksForPosts')
             },
         'snahp': {
             'title': 'snahp',
