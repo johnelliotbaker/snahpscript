@@ -1,16 +1,16 @@
 {
-    "database":
-    {
-        "type": "mysql",
-        "username": "root",
-        "database": "phpbb"
-    },
     "path":
     {
         "tmp": "./tmp",
         "backup": "./backup",
         "phpbb": "/var/www/forum",
         "ext": "ext"
+    },
+    "database":
+    {
+        "type": "mysql",
+        "username": "root",
+        "database": "phpbb"
     },
     "extensions":
     [
