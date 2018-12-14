@@ -3,6 +3,7 @@ import os
 import shutil
 import datetime
 import subprocess
+from subprocess import PIPE, Popen
 import argparse
 
 
@@ -43,15 +44,18 @@ class SnahpInstall(object):
         pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
         username = self.config.db['username']
         database = self.config.db['database']
-        dbFilename = sDate + '.sqldb'
+        dbFilename = sDate + '.gz'
         pathDb = os.path.join(pathToRoot, 'db')
         os.makedirs(pathDb)
         fullpath = os.path.join(pathDb, dbFilename)
-        cmd = ('mysqldump', '-u', username, '-p', '--opt', database)
-        ps = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output = subprocess.check_output(('tee', fullpath), stdin=ps.stdout)
-        ps.wait()
-        errmsg = ps.stderr.read()
+        cmd = ('mysqldump', '-u', username, '-p', '--default-character-set=utf8', database)
+        with open(fullpath, 'wb') as f:
+            GZ = Popen('gzip', stdin=PIPE, stdout=f)
+        p = Popen(cmd, stdout=GZ.stdin, stderr=PIPE)
+        p.wait()
+        GZ.stdin.close()
+        GZ.wait()
+        errmsg = p.stderr.read()
         if errmsg:
             print('\n\n')
             print('==============================================')
@@ -64,7 +68,6 @@ class SnahpInstall(object):
                 print('MySQL database has been saved to:')
                 print('{}'.format(fullpath))
                 return True
-        return False
 
     def createCodeBackup(self):
         print('\n\n')
@@ -78,7 +81,7 @@ class SnahpInstall(object):
         pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
         for ext in aExt:
             fro = os.path.join(pathPhpbb, pathExt, ext['path'], ext['title'])
-            to = os.path.join(pathToRoot, pathExt, ext['title'])
+            to = os.path.join(pathToRoot, pathExt, ext['path'], ext['title'])
             print('Backing up {}'.format(fro))
             print('        to {}'.format(to))
             if os.path.isdir(fro):
