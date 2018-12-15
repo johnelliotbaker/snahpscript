@@ -69,7 +69,25 @@ class SnahpInstall(object):
                 print('{}'.format(fullpath))
                 return True
 
-    def createCodeBackup(self):
+    def createFullCodeBackup(self):
+        print('\n\n')
+        print('++====================================================++')
+        print('|| {} ||'.format('Performing Full Codebase Backup'.center(50)))
+        print('++====================================================++')
+        sDate = self.sDate
+        pathPhpbb = self.config.pathPhpbb
+        pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
+        fro = os.path.join(pathPhpbb)
+        to = os.path.join(pathToRoot, 'FullCode')
+        os.makedirs(to)
+        fullpath = os.path.abspath(os.path.join(to, 'forum.tar.gz'))
+        os.chdir(fro)
+        cmd = ('tar', '-zcvf', fullpath, '.')
+        print(cmd)
+        p = Popen(cmd, stderr=PIPE)
+        p.wait()
+
+    def createExtBackup(self):
         print('\n\n')
         print('++====================================================++')
         print('|| {} ||'.format('Performing Extension Codebase Backup'.center(50)))
@@ -117,18 +135,18 @@ if __name__ == "__main__":
         print('SnahpInstall requires one of the following commands:')
         print('install, backup, all')
     else:
-        if command == 'backup':
-            bDbBackup = si.createDbBackup()
-            if bDbBackup:
-                si.createCodeBackup()
-            else:
-                print('Skipping Code backup due to failed database backup.')
-        elif command == 'install':
+        if command == 'install':
             si.install()
-        elif command == 'all':
+        elif command == 'backupext':
+            si.createExtBackup()
+        elif command == 'backupdb':
+            bDbBackup = si.createDbBackup()
+            if not bDbBackup:
+                print('Skipping Code backup and installation due to failed database backup.')
+        elif command == 'backupfull':
             bDbBackup = si.createDbBackup()
             if bDbBackup:
-                si.createCodeBackup()
+                si.createFullCodeBackup()
                 si.install()
             else:
                 print('Skipping Code backup and installation due to failed database backup.')
