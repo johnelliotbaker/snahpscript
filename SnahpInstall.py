@@ -147,6 +147,5 @@ if __name__ == "__main__":
             bDbBackup = si.createDbBackup()
             if bDbBackup:
                 si.createFullCodeBackup()
-                si.install()
             else:
                 print('Skipping Code backup and installation due to failed database backup.')
