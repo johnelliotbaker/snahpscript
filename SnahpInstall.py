@@ -133,7 +133,7 @@ if __name__ == "__main__":
     si = SnahpInstall()
     if not command:
         print('SnahpInstall requires one of the following commands:')
-        print('install, backup, all')
+        print('backupdb, backupext, backupfull, install')
     else:
         if command == 'install':
             si.install()

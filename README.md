@@ -27,18 +27,24 @@ then only run verify on subsequent runs.
 #### Usage
 It is advised to make back up before installation.
 
-Make code and database backup
+To make database backup
 ```
-python3 SnahpInstall.py backup
+python3 SnahpInstall.py backupdb
 
 ```
 
-Install Snahp related extensions
+To make snahp extension code backup
 ```
-python3 SnahpInstall.py install
+python3 SnahpInstall.py backupext
+
 ```
 
-Backup & install in single command
+To make full phpbb forum code backup
+```
+python3 SnahpInstall.py backupfull
+```
+
+To install extension to phpbb forum
 ```
 python3 SnahpInstall.py all
 
