@@ -125,7 +125,7 @@ class SnahpInstall(object):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Snahp backup and install utility.')
-    parser.add_argument('command', type=str, help='backup, install, all')
+    parser.add_argument('command', type=str, help='backupdb, backupext, backupfull, install')
     args = parser.parse_args()
 
     command = args.command
