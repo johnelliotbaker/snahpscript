@@ -46,7 +46,7 @@ python3 SnahpInstall.py backupfull
 
 To install extension to phpbb forum
 ```
-python3 SnahpInstall.py all
+python3 SnahpInstall.py install
 
 ```
 
