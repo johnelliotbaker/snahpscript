@@ -82,7 +82,7 @@ class SnahpInstall(object):
         os.makedirs(to)
         fullpath = os.path.abspath(os.path.join(to, 'forum.tar.gz'))
         os.chdir(fro)
-        cmd = ('tar', '-zcvf', fullpath, '.')
+        cmd = ('tar', '-zcf', fullpath, '.')
         print(cmd)
         p = Popen(cmd, stderr=PIPE)
         p.wait()
