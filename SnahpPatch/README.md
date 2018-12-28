@@ -49,6 +49,7 @@ python SnahpPatch.py deploy -p PACKAGE_NAME
 This will start an interactive prompt for deploying the package.
 The following commands are available.
 
+```
 +---+--------+--------------------------------------------+   
 |   | cmd    | Description                                |   
 +---+--------+--------------------------------------------+   
@@ -64,6 +65,7 @@ The following commands are available.
 +---+--------+--------------------------------------------+   
 | q | quit   | Quit the interactive deployment            |   
 +---+--------+--------------------------------------------+   
+```
 
 Once a patch has been applied, the listing should show correct status for
 that patch.
