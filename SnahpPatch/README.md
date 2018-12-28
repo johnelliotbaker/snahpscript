@@ -49,21 +49,21 @@ python SnahpPatch.py deploy -p PACKAGE_NAME
 This will start an interactive prompt for deploying the package.
 The following commands are available.
 
-+---+--------+--------------------------------------------+
-|   | cmd    | Description                                |
-+---+--------+--------------------------------------------+
-| l | list   | List the available patches                 |
-+---+--------+--------------------------------------------+
-| a | apply  | Apply the package. Once Selected,          |
-|   |        | a second prompt will ask for patch number. |
-+---+--------+--------------------------------------------+
-| r | revert | If a patch was applied previously,         |
-|   |        | this will revert that change.              |
-+---+--------+--------------------------------------------+
-| d | detail | Show the actual diff                       |
-+---+--------+--------------------------------------------+
-| q | quit   | Quit the interactive deployment            |
-+---+--------+--------------------------------------------+
++---+--------+--------------------------------------------+   
+|   | cmd    | Description                                |   
++---+--------+--------------------------------------------+   
+| l | list   | List the available patches                 |   
++---+--------+--------------------------------------------+   
+| a | apply  | Apply the package. Once Selected,          |   
+|   |        | a second prompt will ask for patch number. |   
++---+--------+--------------------------------------------+   
+| r | revert | If a patch was applied previously,         |   
+|   |        | this will revert that change.              |   
++---+--------+--------------------------------------------+   
+| d | detail | Show the actual diff                       |   
++---+--------+--------------------------------------------+   
+| q | quit   | Quit the interactive deployment            |   
++---+--------+--------------------------------------------+   
 
 Once a patch has been applied, the listing should show correct status for
 that patch.
