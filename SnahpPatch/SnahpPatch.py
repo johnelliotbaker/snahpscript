@@ -282,6 +282,22 @@ if __name__ == '__main__':
             else:
                 raise Exception('Unknown package name "{}"'.format(package))
     elif mode in ["l", "list"]:
+        if os.path.isdir(PATCH_PATH):
+            filelist = glob.glob(pjoin(PATCH_PATH, '*'))
+            aPackage = []
+            for filename in filelist:
+                basepath = filename
+                toppath = os.path.relpath(basepath, PATCH_PATH)
+                aPackage.append(toppath)
+            if aPackage:
+                print("The following packages are available.")
+                print("+=======================================================+")
+                for package in aPackage:
+                    print('|{:^55s}|'.format(package))
+                print("+=======================================================+")
+        else:
+            print("No packages currently available.")
+    elif mode in ["p", "plist"]:
         if os.path.isdir(PACKAGE_SUBPATH):
             filelist = glob.glob(pjoin(PACKAGE_SUBPATH, '**', "db.json"), recursive=True)
             aPackage = []
