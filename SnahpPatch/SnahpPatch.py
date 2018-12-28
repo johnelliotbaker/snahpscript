@@ -118,8 +118,10 @@ def applyPatch(db, iSelect, packageName, bReverse=False):
     if bReverse is True:
         args.append('--reverse')
         entry['bApplied'] = False
+        entry['datetime']['patched'] = None
     else:
         entry['bApplied'] = True
+        entry['datetime']['patched'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     prCat = subprocess.Popen(['cat', pathpatch], stdout=PIPE )
     prPatch = subprocess.Popen(args, stdout=PIPE, stdin=prCat.stdout)
     patchStrn = prPatch.communicate()[0]
@@ -163,7 +165,7 @@ def deploy(packageName):
                     applyPatch(db, int(iSelect), packageName, True)
 
 
-def makeDeployment(packageName):
+def makeDeployment(packageName, target):
     deploymentPath = pjoin(PACKAGE_SUBPATH, packageName)
     modifiedPath = pjoin(PATCH_PATH, packageName)
     if not os.path.isdir(PATCH_PATH):
@@ -193,7 +195,7 @@ def makeDeployment(packageName):
         fropath['basename'] = basename
 
         toopath = {}
-        toopath['base']     = '/var/www/forum/'
+        toopath['base']     = target
         toopath['top']      = toppath
         toopath['basename'] = basename
 
@@ -261,18 +263,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", help="(m)ake, (d)eploy, (l)ist")
     parser.add_argument("--source")
-    parser.add_argument("--target")
+    parser.add_argument("-t", "--target")
     parser.add_argument("-p", "--package")
     args = parser.parse_args()
     mode = args.mode
     package = args.package
+    target = args.target if args.target else '/var/www/forum/'
 
     if not os.path.isdir(PACKAGE_SUBPATH):
         os.mkdir(PACKAGE_SUBPATH)
 
     if mode in ["m", "make"]:
         if package:
-            makeDeployment(package)
+            makeDeployment(package, target=target)
         else:
             makeDeployment('testpackage')
     elif mode in ["d", "deploy"]:
