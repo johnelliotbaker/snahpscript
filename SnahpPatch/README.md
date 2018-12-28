@@ -12,7 +12,7 @@ with future git pulls and likely cause forced merges.
 For novices, this often leads to big headaches.
 
 
-### Installing
+## Installing
 This is part of the snahpscript package, and should be cloned as such.
 ```
 git clone https://github.com/johnelliotbaker/snahpscript.git
@@ -23,7 +23,7 @@ If local repository already exists, cd into snahpscript directory
 git pull
 ```
 
-### Listing Available Development Packages
+## Listing Available Development Packages
 Diff files are provided by the developer in "patch_data" directory.
 To see available packages for deployment:
 
