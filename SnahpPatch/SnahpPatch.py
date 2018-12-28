@@ -145,6 +145,9 @@ def deploy(packageName):
     listPatch(db)
     while(command != "q"):
         command = input("\n(l)ist, (a)pply, (r)evert, (d)etail, (q)uit: ")
+        print(command)
+        if command == "":
+            continue
         if command == "l":
             listPatch(db)
         elif command in "adr":
@@ -158,8 +161,6 @@ def deploy(packageName):
                     applyPatch(db, int(iSelect), packageName)
                 elif command == "r":
                     applyPatch(db, int(iSelect), packageName, True)
-
-
 
 
 def makeDeployment(packageName):
