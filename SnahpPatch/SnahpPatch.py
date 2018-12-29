@@ -66,6 +66,9 @@ def getmd5(filename):
             md5.update(chunk)
     return md5.hexdigest()
 
+def checkWritePermission(db):
+    pass
+
 def listPatch(db):
     aEntry = db.aEntry
     nEntry = len(aEntry)
@@ -124,13 +127,20 @@ def applyPatch(db, iSelect, packageName, bReverse=False):
         entry['datetime']['patched'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     prCat = subprocess.Popen(['cat', pathpatch], stdout=PIPE )
     prPatch = subprocess.Popen(args, stdout=PIPE, stdin=prCat.stdout)
-    patchStrn = prPatch.communicate()[0]
+    patchStrn = prPatch.communicate()[0].decode('utf-8')
 
     print("\n{} {} on {} ...".format(
         'Restoring' if bReverse else 'Applying', eid, pathtoo))
-    #  print(patchStrn.decode('utf-8'))
-    print()
-    db.save()
+    if "is read-only;" in patchStrn:
+        print(patchStrn)
+        print()
+        print('+=============================================+')
+        print("|  You don't have write permission to patch.  |")
+        print('+=============================================+')
+        print()
+        raise Exception("You need to have write permission to apply this patch.\n\n")
+    else:
+        db.save()
     listPatch(db)
     
 
