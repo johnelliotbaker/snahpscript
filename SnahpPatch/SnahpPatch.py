@@ -185,13 +185,13 @@ def makeDeployment(packageName, target):
     dbFile = pjoin(deploymentPath, DBFILE_NAME)
     db = Database.fromFilepath(dbFile)
 
-    filelist = glob.glob(pjoin(modifiedPath, '**', '*.php'), recursive=True)
+    filelist = glob.glob(pjoin(modifiedPath, '**', '*.*'), recursive=True)
     print(modifiedPath)
     for filename in filelist:
         basename = os.path.basename(filename)
         basepath = os.path.dirname(filename)
         toppath = os.path.relpath(basepath, modifiedPath)
-        print(basename)
+        print('{}'.format(basename))
 
         #  pdb.set_trace()
         entry = {}
