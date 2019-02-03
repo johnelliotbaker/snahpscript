@@ -5,6 +5,25 @@ import datetime
 import subprocess
 from subprocess import PIPE, Popen
 import argparse
+import glob
+from os.path import join as pjoin
+
+
+
+def getDirList(path):
+    dlist = glob.glob(pjoin(path, '*/'))
+    dlist.sort()
+    return [os.path.relpath(x, path) for x in dlist]
+
+
+def listBackup(pathBackup):
+    aBackup = getDirList(pathBackup)
+    n = len(aBackup)
+    for i in range(n):
+        backup = aBackup[i]
+        print('{} : {} '.format(i, backup))
+
+
 
 
 def createPath(path, bDelete=False):
@@ -122,6 +141,28 @@ class SnahpInstall(object):
             cmd = ['git', 'clone', url, to]
             subprocess.call(cmd)
 
+    def restore(self):
+        command = ''
+        config = self.config
+        pForum = config.pathPhpbb
+        print(config)
+        while (command != "q"):
+            command = input("(l)ist, (D)elete Forum, (R)estore (q)uit: ")
+            if command == "q":
+                return
+            elif command == "D":
+                confirm = input("Are you sure you want to delete {}? (type yes)".format(
+                    pForum
+                    ))
+                if confirm == "yes":
+                    try:
+                        os.rmdir(pForum)
+                    except Exception as e:
+                        print(e)
+            elif command == "l":
+                path = listBackup(config.pathBackupRoot)
+                print(path)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Snahp backup and install utility.')
@@ -152,4 +193,6 @@ if __name__ == "__main__":
                 si.createFullCodeBackup()
             else:
                 print('Skipping Code backup and installation due to failed database backup.')
+        elif command == 'restore':
+            si.restore()
 
