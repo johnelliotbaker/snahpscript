@@ -41,6 +41,7 @@ class SnahpInstall(object):
 
     def __init__(self):
         self.setup()
+        self.backupPathSuffix = ''
 
     def setup(self):
         self.config = SnahpConfig()
@@ -54,16 +55,22 @@ class SnahpInstall(object):
         self.sDate = sDate
         self.config.dbUsername = 'root'
 
+    def getBackupPath(self):
+        sDate = self.sDate
+        if self.backupPathSuffix:
+            return sDate + '_' + self.backupPathSuffix
+        return sDate
+
     def createDbBackup(self):
         print('\n\n')
         print('++====================================================++')
         print('|| {} ||'.format('Performing MySQL Database Backup'.center(50)))
         print('++====================================================++')
-        sDate = self.sDate
-        pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
+        newPath = self.getBackupPath()
+        pathToRoot = os.path.join(self.config.pathBackupRoot, newPath)
         username = self.config.db['username']
         database = self.config.db['database']
-        dbFilename = sDate + '.gz'
+        dbFilename = newPath + '.gz'
         pathDb = os.path.join(pathToRoot, 'db')
         os.makedirs(pathDb)
         fullpath = os.path.join(pathDb, dbFilename)
@@ -93,9 +100,9 @@ class SnahpInstall(object):
         print('++====================================================++')
         print('|| {} ||'.format('Performing Full Codebase Backup'.center(50)))
         print('++====================================================++')
-        sDate = self.sDate
+        newPath = self.getBackupPath()
         pathPhpbb = self.config.pathPhpbb
-        pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
+        pathToRoot = os.path.join(self.config.pathBackupRoot, newPath)
         fro = os.path.join(pathPhpbb)
         to = os.path.join(pathToRoot, 'FullCode')
         os.makedirs(to)
@@ -111,11 +118,11 @@ class SnahpInstall(object):
         print('++====================================================++')
         print('|| {} ||'.format('Performing Extension Codebase Backup'.center(50)))
         print('++====================================================++')
-        sDate = self.sDate
+        newPath = self.getBackupPath()
         aExt = self.config.aExtension
         pathPhpbb = self.config.pathPhpbb
         pathExt = self.config.pathExt
-        pathToRoot = os.path.join(self.config.pathBackupRoot, sDate)
+        pathToRoot = os.path.join(self.config.pathBackupRoot, newPath)
         for ext in aExt:
             fro = os.path.join(pathPhpbb, pathExt, ext['path'], ext['title'])
             to = os.path.join(pathToRoot, pathExt, ext['path'], ext['title'])
@@ -178,21 +185,25 @@ if __name__ == "__main__":
     else:
         if command == 'install':
             si.install()
-        elif command == 'backupext':
-            si.createExtBackup()
-        elif command == 'backupdb':
-            bDbBackup = si.createDbBackup()
-            if not bDbBackup:
-                print('Skipping Code backup and installation due to failed database backup.')
-        elif command == 'backupfullcode':
-            print("Making Full Codebase Backup")
-            si.createFullCodeBackup()
-        elif command == 'backupfull':
-            bDbBackup = si.createDbBackup()
-            if bDbBackup:
+        elif command[:6] == 'backup':
+            suffix = input('Enter path suffix if desired: ')
+            suffix = '_'.join(suffix.split())
+            si.backupPathSuffix = suffix
+            if command == 'backupext':
+                si.createExtBackup()
+            elif command == 'backupdb':
+                bDbBackup = si.createDbBackup()
+                if not bDbBackup:
+                    print('Skipping Code backup and installation due to failed database backup.')
+            elif command == 'backupfullcode':
+                print("Making Full Codebase Backup")
                 si.createFullCodeBackup()
-            else:
-                print('Skipping Code backup and installation due to failed database backup.')
+            elif command == 'backupfull':
+                bDbBackup = si.createDbBackup()
+                if bDbBackup:
+                    si.createFullCodeBackup()
+                else:
+                    print('Skipping Code backup and installation due to failed database backup.')
         elif command == 'restore':
             si.restore()
 
