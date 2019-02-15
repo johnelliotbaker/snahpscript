@@ -32,6 +32,6 @@ sudo vi /etc/crontab
 ```
 Then add an entry to run system cron to call our cron script
 `
-*/1 * * * * root python3 /home/ubm/script/snahpscript/cron/snahp_cron.py > /dev/null 2>&1
+*/1 * * * * root python3 /home/username/script/snahpscript/cron/snahp_cron.py > /dev/null 2>&1
 `
 
