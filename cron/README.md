@@ -7,7 +7,8 @@ git clone git@github.com:johnelliotbaker/snahpscript.git
 ## Configuration
 **cron_manifest.json** configures cron jobs
 
-#### Required
+### cron_manifest.json
+
 - host->url             = Hostname of the phpbb server
 - credentials->username = phpbb moderator username
 - credentials->password = phpbb moderator password
