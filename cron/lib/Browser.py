@@ -88,9 +88,9 @@ class Browser(object):
     def isLoggedIn(self):
         bLogged = len(self.session.cookies) > 0
         if (bLogged):
-            print(f'Checking login status ... already logged in')
+            print('Checking login status ... already logged in')
         else:
-            print(f'Checking login status ... Not logged in')
+            print('Checking login status ... Not logged in')
         return bLogged
 
     def request(self, **kwargs):
@@ -99,10 +99,10 @@ class Browser(object):
         url = getKwUrl(kwargs)
         payload = getKwPayload(kwargs)
         if type == 'get':
-            print(f'>> GET: {url}')
+            print('>> GET: {}'.format(url))
             resp = session.get(url, headers=self.headers)
         elif type == 'post':
-            print(f'>> POST: {url}  using payload {payload}')
+            print('>> POST: {}  using payload {}'.format(url, payload))
             resp = session.post(url, headers=self.headers, data=payload)
         else:
             resp = None
