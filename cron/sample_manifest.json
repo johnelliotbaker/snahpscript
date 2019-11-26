@@ -1,0 +1,23 @@
+{
+    "host": {
+        "url": "http://hostname"
+    },
+    "credentials": {
+        "username": "username",
+        "password": "password"
+    },
+    "jobs": [
+        {
+            "name": "Hourly",
+            "url": "/app.php/snahp/cron/hourly/",
+            "last_performed": 0,
+            "duration": "3600"
+        },
+        {
+            "name": "Fetching with Feedbotpost",
+            "url": "/app.php/feedpostbot/fetcher/",
+            "last_performed": 0,
+            "duration": "3600"
+        }
+    ]
+}

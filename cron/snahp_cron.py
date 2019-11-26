@@ -8,25 +8,12 @@ from urllib.parse import urljoin
 import datetime
 import os
 
-def log(status):
-    logfilename = '/home/username/script/snahpscript/cron/log.txt'
-    statinfo = os.stat(logfilename)
-    if statinfo.st_size > 1000000:
-        with open(logfilename, 'w') as f:
-            pass
-    with open(logfilename, 'a', encoding='utf-8') as f:
-        now = datetime.datetime.now()
-        datestrn = now.strftime('%Y-%m-%d %H:%M:%S.%f')
-        strn = '{} {}\n'.format(datestrn, status)
-        f.write(strn)
-
 class Cron(object):
 
     def __init__(self, data_file_path):
         self.data_file_path = data_file_path
         data = self.load_data(data_file_path)
         if not data:
-            log('Invalid data or no data file specified.')
             raise Exception('Invalid data or no data file specified.')
         self.data     = data
         self.jobs     = data['jobs']
@@ -82,10 +69,8 @@ class Cron(object):
                 b_perform = self.perform(job)
                 if b_perform:
                     name = job['name']
-                    log(name)
 
 
 if __name__=='__main__':
-    log('Start')
     cron = Cron(DATA_FILE_PATH)
     cron.execute()
